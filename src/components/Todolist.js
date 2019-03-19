@@ -5,24 +5,29 @@ class Todolist extends Component {
         super(props);
         this.state = {
             list:[
-                {
-                    title: '完成自己的todolist初步编写',
-                    flag: false
-                },
-                {
-                    title: '完成自己的todolist样式改编',
-                    flag: true
-                },
-                {
-                    title: '吃饭',
-                    flag: true
-                }
+                // {
+                //     title: '完成自己的todolist初步编写',
+                //     flag: false
+                // },
+                // {
+                //     title: '完成自己的todolist样式改编',
+                //     flag: true
+                // },
+                // {
+                //     title: '吃饭',
+                //     flag: true
+                // }
             ]
           };
     }
     handleInput = (e) => {
         if(e.keyCode === 13) {
             // console.log(e.target.value)
+            if(e.target.value === '') {
+                alert('请输入需要添加的事件');
+                return ;
+            }
+            
             let tmpList = this.state.list;
             tmpList.push({
                 title: e.target.value,
@@ -32,6 +37,8 @@ class Todolist extends Component {
             list: tmpList
             })
             e.target.value = '';
+
+            localStorage.setItem('todolist', JSON.stringify(tmpList));
         }
 
     }
@@ -61,45 +68,83 @@ class Todolist extends Component {
         this.setState({
             list: tmpList
         })
+
+        localStorage.setItem('todolist', JSON.stringify(tmpList));
     }
     handleClear = () => {
         this.setState({
             list: []
+        })
+
+        localStorage.setItem('todolist', JSON.stringify([]));
+    }
+    handleRemove = (key) => {
+        let tmpList = this.state.list;
+        tmpList.splice(key, 1);
+        this.setState({
+            list: tmpList
+        })
+
+        // localStorage.setItem('todolist', JSON.stringify(tmpList));
+    }
+    //待添加
+    handleThingsChange = (key) => {
+        console.log(key);
+    }
+    toAddInput=()=> {
+        this.refs.addEvent.focus();
+    }
+    componentDidMount = () =>{
+        let tmpList = JSON.parse(localStorage.getItem('todolist'));
+        this.setState({
+            list: tmpList
         })
     }
     render() {
         return (
             <div>
                 <header>
-                    ToDoList: <input type='text' className='' onKeyUp={this.handleInput} placeholder='添加Todo' />
+                    <div>
+                        <label onClick={this.toAddInput}>ToDoList:</label>
+                        <input type='text' ref='addEvent' onKeyUp={this.handleInput} placeholder='添加Todo' />
+                    </div>
+
                 </header>
-                <div>
-                    <p><b className='subTitle'>正在进行</b>{this.countNumber('1')}</p>
+                <div className='subDiv'>
+                    <p><b className='subTitle'>正在进行</b><span className='count'>{this.countNumber('1')}</span></p>
                     <ul className='doingList'>
                         {
                             this.state.list.map((value, key) => {
                                 if(value.flag === false) {
                                     return(
-                                        <li key={key}><input type='checkbox' onChange={this.handleCheckBoxChange.bind(this, key)} checked={value.flag} />{value.title}</li>
+                                        <li key={key} draggable='true'>
+                                        <input type='checkbox' onChange={this.handleCheckBoxChange.bind(this, key)} checked={value.flag} />
+                                        <span onClick={this.handleThingsChange.bind(this, key)}>{value.title}</span>
+                                        <button onClick={this.handleRemove.bind(this, key)}></button>
+                                        </li>
                                     )
                                 }
                             })
                         }
                     </ul>
-                    <p><b className='subTitle'>已经完成</b>{this.countNumber('2')}</p>
+                    <p><b className='subTitle'>已经完成</b><span className='count'>{this.countNumber('2')}</span></p>
                     <ul className='doingList'>
                         {
                             this.state.list.map((value, key) => {
                                 if(value.flag === true) {
                                     return(
-                                        <li key={key}><input type='checkbox' onChange={this.handleCheckBoxChange.bind(this, key)} checked={value.flag}/>{value.title}</li>
+                                        <li key={key} draggable='true' className='nextLi'>
+                                        <input type='checkbox' onChange={this.handleCheckBoxChange.bind(this, key)} checked={value.flag}/>
+                                        <span onClick={this.handleThingsChange.bind(this, key)}>{value.title}</span>
+                                        <button onClick={this.handleRemove.bind(this, key)}></button>
+                                        </li>
                                     )
                                 }
                             })
                         }
                     </ul>
                 </div>
-                <footer>Copyright 2019 Minhao <div onClick={this.handleClear}>clear</div></footer>
+                <footer>Copyright 2019 Minhao <span onClick={this.handleClear}>clear</span></footer>
             </div>
         );
     }
