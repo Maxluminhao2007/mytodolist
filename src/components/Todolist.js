@@ -5,20 +5,8 @@ class Todolist extends Component {
         super(props);
         this.state = {
             list:[
-                // {
-                //     title: '完成自己的todolist初步编写',
-                //     flag: false
-                // },
-                // {
-                //     title: '完成自己的todolist样式改编',
-                //     flag: true
-                // },
-                // {
-                //     title: '吃饭',
-                //     flag: true
-                // }
             ]
-          };
+        };
     }
     handleInput = (e) => {
         if(e.keyCode === 13) {
@@ -85,7 +73,7 @@ class Todolist extends Component {
             list: tmpList
         })
 
-        // localStorage.setItem('todolist', JSON.stringify(tmpList));
+        localStorage.setItem('todolist', JSON.stringify(tmpList));
     }
     //待添加
     handleThingsChange = (key) => {
