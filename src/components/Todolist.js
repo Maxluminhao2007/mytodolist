@@ -83,10 +83,12 @@ class Todolist extends Component {
         this.refs.addEvent.focus();
     }
     componentDidMount = () =>{
-        let tmpList = JSON.parse(localStorage.getItem('todolist'));
-        this.setState({
+        if(JSON.parse(localStorage.getItem('todolist'))) {
+            let tmpList = JSON.parse(localStorage.getItem('todolist'));
+            this.setState({
             list: tmpList
         })
+        }
     }
     render() {
         return (

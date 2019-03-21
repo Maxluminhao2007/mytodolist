@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "npm": "^6.9.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-scripts": "2.1.8"
@@ -21,5 +22,17 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "description": "功能列表\r - [x] 点击todolist聚焦输入框\r - [x] 删除事项按钮\r - [x] 完成与未完成事项的转换\r - [x] 计数功能\r - [x] 输入空格提示错误\r - [x] 清除所有事项按钮\r - [x] 本地缓存功能\r - [ ] 点击事项修改按钮",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maxluminhao2007/mytodolist.git"
+  },
+  "author": "Minhao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Maxluminhao2007/mytodolist/issues"
+  },
+  "homepage": "https://github.com/Maxluminhao2007/mytodolist#readme"
 }
